@@ -8,17 +8,19 @@ import { Route, Routes } from "react-router-dom";
 
 const App = () => {
   return (
-    <Routes>
-      {/* Public Routes */}
-      <Route element={<AuthLayout />}>
-        <Route path="sign-in" element={<Signin />} />
-        <Route path="sign-up" element={<Signup />} />
-      </Route>
-      {/* Private Routs */}
-      <Route element={<RootLayout />}>
-        <Route index element={<Home />} />
-      </Route>
-    </Routes>
+    <main className="flex h-screen">
+      <Routes>
+        {/* Public Routes */}
+        <Route element={<AuthLayout />}>
+          <Route path="sign-in" element={<Signin />} />
+          <Route path="sign-up" element={<Signup />} />
+        </Route>
+        {/* Private Routs */}
+        <Route element={<RootLayout />}>
+          <Route index element={<Home />} />
+        </Route>
+      </Routes>
+    </main>
   );
 };
 

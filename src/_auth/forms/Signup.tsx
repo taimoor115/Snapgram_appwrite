@@ -1,5 +1,11 @@
+import { Button } from "@/lib/utils/ui/button";
+
 const Signup = () => {
-  return <div>SignUp</div>;
+  return (
+    <div>
+      <Button>Click Me</Button>
+    </div>
+  );
 };
 
 export default Signup;
