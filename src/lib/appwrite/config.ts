@@ -4,7 +4,7 @@ export const appwriteConfig = {
   url: "https://cloud.appwrite.io/v1",
   projectId: "6655f3ef00115407a40f",
   databaseId: "66571c6a00144afb10f3",
-  storageId: import.meta.env.VITE_APPWRITE_STORAGE_ID,
+  storageId: "66571c96000dd2157e06",
   userCollectionId: "665727850031bca6bae3",
   postCollectionId: "665727120035faf9fd32",
   savesCollectionId: "665727a0001f53249600",

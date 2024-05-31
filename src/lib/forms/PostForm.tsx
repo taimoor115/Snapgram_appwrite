@@ -16,11 +16,20 @@ import { Textarea } from "../utils/ui/textarea";
 import FileUploader from "../utils/Shared/FileUploader";
 import { PostSchema } from "../validation";
 import { Models } from "appwrite";
+import { useCreatePost } from "../react-query/queriesAndMutations";
+import { useUserContext } from "@/context/AuthContext";
+import { toast, useToast } from "../utils/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 type PostFormProps = {
   post?: Models.Document;
 };
 const PostForm = ({ post }: PostFormProps) => {
+  const { mutateAsync: createPost, isPending: isLoadingCreate } =
+    useCreatePost();
+  const { user } = useUserContext();
+  const { toast } = useToast();
+  const navigate = useNavigate();
   // 1. Define your form.
   const form = useForm<z.infer<typeof PostSchema>>({
     resolver: zodResolver(PostSchema),
@@ -33,10 +42,17 @@ const PostForm = ({ post }: PostFormProps) => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof PostSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof PostSchema>) {
+    const newPost = await createPost({
+      ...values,
+      userId: user.id,
+    });
+
+    if (!newPost) {
+      toast({ title: "Please try again" });
+    }
+
+    navigate("/");
   }
   return (
     <Form {...form}>
