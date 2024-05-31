@@ -2,6 +2,7 @@ import { INewPost, INewUser } from "@/types";
 import { ID, Query } from "appwrite";
 import { account, appwriteConfig, avatars, databases, storage } from "./config";
 import { URL } from "url";
+import { log } from "console";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -51,6 +52,8 @@ export async function saveUserToDB(user: {
 }
 
 export async function signInAccount(user: { email: string; password: string }) {
+  console.log("hello");
+
   try {
     const session = await account.createEmailSession(user.email, user.password);
     console.log(session);
@@ -187,6 +190,32 @@ export async function deleteFile(fileId: string) {
     await storage.deleteFile(appwriteConfig.storageId, fileId);
 
     return { status: "ok" };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getRecentPosts() {
+  const posts = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.postCollectionId,
+    [Query.orderDesc("$createdAt"), Query.limit(20)]
+  );
+  if (!posts) return Error;
+
+  return posts;
+}
+
+export async function likePost(postId: string, likesArray: string[]) {
+  try {
+    const updatedPost = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      postId,
+      { likes: likesArray }
+    );
+    if (!updatedPost) throw Error;
+    return updatedPost;
   } catch (error) {
     console.log(error);
   }

@@ -20,7 +20,7 @@ const LeftSidebar = () => {
   }, [isSuccess]);
   return (
     <nav className="leftsidebar">
-      <div className="flex flex-col gap-11">
+      <div className="flex flex-col gap-6">
         <Link to="/" className="flex gap-3 items-center">
           <img
             src="/assets/images/logo.svg"
@@ -50,7 +50,7 @@ const LeftSidebar = () => {
                 key={links.label}
               >
                 <NavLink
-                  className="flex gap-4 items-center p-4 group"
+                  className="flex gap-2 items-center p-2 group"
                   to={links.route}
                 >
                   <img
