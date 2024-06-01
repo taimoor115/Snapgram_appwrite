@@ -2,7 +2,6 @@ import { INewPost, INewUser } from "@/types";
 import { ID, Query } from "appwrite";
 import { account, appwriteConfig, avatars, databases, storage } from "./config";
 import { URL } from "url";
-import { log } from "console";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -249,6 +248,19 @@ export async function deleteSavedPost(saveIdRecord: string) {
     );
     if (!statusCode) throw Error;
     return { statusCode: "ok" };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getPostById(postId: string) {
+  try {
+    const post = await databases.getDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      postId
+    );
+    return post;
   } catch (error) {
     console.log(error);
   }
