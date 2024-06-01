@@ -18,13 +18,14 @@ import { PostSchema } from "../validation";
 import { Models } from "appwrite";
 import { useCreatePost } from "../react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
-import { toast, useToast } from "../utils/ui/use-toast";
+import { useToast } from "../utils/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 
 type PostFormProps = {
   post?: Models.Document;
+  action: "Update" | "Create";
 };
-const PostForm = ({ post }: PostFormProps) => {
+const PostForm = ({ post, action }: PostFormProps) => {
   const { mutateAsync: createPost, isPending: isLoadingCreate } =
     useCreatePost();
   const { user } = useUserContext();
@@ -37,7 +38,7 @@ const PostForm = ({ post }: PostFormProps) => {
       caption: post ? post?.caption : "",
       file: [],
       location: post ? post?.location : "",
-      tags: post ? post.tags.join(",") : "",
+      tags: post ? post?.tags?.join(",") : "",
     },
   });
 
