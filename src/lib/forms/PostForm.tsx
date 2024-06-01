@@ -59,7 +59,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
       if (!updatedPost) {
         toast({ title: "Please try again" });
       }
-      return navigate(`/posts/${post.id}`);
+      return navigate(`/`);
     }
     const newPost = await createPost({
       ...values,
